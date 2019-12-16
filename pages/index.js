@@ -1,11 +1,12 @@
-import React from 'react'
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core'
 import Head from 'next/head'
 import Nav from '../components/nav'
 
 const Home = () => (
   <div>
     <Head>
-      <title>Home</title>
+      <title>NI - Competitors Products</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
