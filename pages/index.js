@@ -3,10 +3,13 @@ import { jsx, css } from '@emotion/core'
 import Head from 'next/head'
 import Link from 'next/link';
 import Layout from '../components/Layout';
+import fetch from 'isomorphic-unfetch'
 
-const Home = () => (
+
+const Home = ({data}) => (
   <Layout>
     <div>
+      {data[0].title}
     <Head>
       <title>NI - Competitors Products</title>
       <link rel="icon" href="/favicon.ico" />
@@ -78,5 +81,21 @@ const Home = () => (
   </Layout>
 
 )
+
+
+Home.getInitialProps = async ({req}) => {
+
+  const res = await fetch(`http://localhost:8080/api/products`);
+  const data = await res.json();
+  return {data};
+
+  // const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+  // const res = await fetch(baseUrl +'api/products');
+  // const json = await res.json()
+
+  // console.log(req);
+
+
+}
 
 export default Home
