@@ -1,0 +1,19 @@
+[
+  {
+    "title": "Maschine ...",
+    "sku": "...",
+    "description": "...",
+    "shops": [
+      {
+        "country": "DE",
+        "currency": "EUR",
+        "image_url": "https://www.thomann.de/pics/bdb/447965/13569191_800.jpg",
+        "name": "Maschine Mikro MK3",
+        "price": "220.00",
+        "product_url": "https://www.thomann.de/intl/native_instruments_maschine_mikro_mk3.htm",
+        "shop_logo": "...",
+        "shop": "thomann"
+      }
+    ]
+  }
+]
