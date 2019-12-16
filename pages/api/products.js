@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import stub from './products.json';
 import config from '../../config';
 
 
@@ -15,6 +16,8 @@ const getJobIds = () => Promise.all(SPIDERS.map(async spiderName => {
 
 
 export default async (req, res) => {
+  return res.status(200).json(stub)
+
   console.log('requesting job ids');
   const jobIds = await getJobIds();
   console.log(`got job ids: ${JSON.stringify(jobIds)}`);
@@ -26,5 +29,5 @@ export default async (req, res) => {
     return data;
   }));
   const items = itemsRaw.reduce((acc, items) => [...acc, ...items], []);
-  res.status(200).json(items)
+  res.status(200).json(stub)
 }
