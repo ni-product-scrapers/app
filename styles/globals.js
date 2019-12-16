@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css } from '@emotion/core'
+import { css } from '@emotion/core';
 
 export default css`
   * {
@@ -17,7 +17,7 @@ export default css`
 
   body {
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
-          Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Helvetica,
+      sans-serif;
   }
 `;

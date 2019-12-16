@@ -1,29 +1,51 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import {Flex, Box, Text, Button} from 'rebass';
+import { Flex, Box, Text, Button } from 'rebass';
 
-
-
-const ShowRow = ({product, logo, price}) => {
-  return(
+const ShopRow = ({ shop, title, price, currency, shop_logo, image_url, product_url }) => {
+  return (
     <Box
+      sx={{ padding: 3, marginBottom: 3 }}
       css={css`
         display: grid;
         grid-template-columns: 1fr 1fr 1fr auto;
-        grid-row-gap: 100px;
+        row-gap: 1em;
+        border: 2px solid #eee;
+        border-radius: 6px;
+        align-items: center;
+        align-content: space-between;
       `}
-      >
+    >
       <Box>
-        <img css={css`width: 100px;`} src="https://upload.wikimedia.org/wikipedia/commons/5/59/Amazon.de-Logo.svg" />
+        <img
+          css={css`
+            width: 100px;
+          `}
+          src={shop_logo}
+        />
       </Box>
-      <Box><h2>299€</h2></Box>
-      <Box>Product Name lorem ipsum box bla bla</Box>
-      <Box><Button><a css={css`color: white;`} href="#">visit</a></Button></Box>
+      <Box>
+        <Text fontWeight="bold" px={1}>
+          {price || 'ND'} {currency || 'ND'}
+        </Text>
+      </Box>
+      <Box pr={2}>{title || 'ND'}</Box>
+      <Box>
+        <Button>
+          <a
+            target="_blank"
+            css={css`
+              color: white;
+            `}
+            href={product_url}
+          >
+            go to {shop}
+          </a>
+        </Button>
+      </Box>
+    </Box>
+  );
+};
 
-  </Box>
-  )
-}
-
-
-export default ShowRow;
+export default ShopRow;
