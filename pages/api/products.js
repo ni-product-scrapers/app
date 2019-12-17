@@ -74,6 +74,7 @@ export default async (req, res) => {
 
   const items = Object.values(itemsMap);
 
+  // add graphql data on every item
   const itemsWithGraphQL = await Promise.all(
     items.map( async ({sku, ...item}) => {
       const graphQLreq = await getGraphQLProduct(sku);
