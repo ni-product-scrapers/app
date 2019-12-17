@@ -36,12 +36,31 @@ const getItems = () =>
     });
   });
 
-const getGraphQLProduct = search => {
-  return request('http://native-instruments.com/graphql', graphqlProductQuery, {
-    hitsPerPage: 1,
-    search,
-  });
-};
+const graphqlCollectionDataPromise = (async () => {
+  const chunks = await Promise.all(
+    [0, 1].map(page =>
+      request('http://native-instruments.com/graphql', graphqlProductQuery, {
+        hitsPerPage: 500,
+        page,
+      }).catch(err => {
+        return err.response.data;
+      }),
+    ),
+  );
+  return chunks.reduce(
+    (
+      acc,
+      {
+        user: {
+          getProducts: {
+            result: {items},
+          },
+        },
+      },
+    ) => [...acc, ...items],
+    [],
+  );
+})();
 
 export default async (req, res) => {
   const itemsRaw = await getItems();
@@ -60,11 +79,12 @@ export default async (req, res) => {
 
   const items = Object.values(itemsMap);
 
+  const graphqlCollectionData = await graphqlCollectionDataPromise;
+
   // add graphql data on every item
   const itemsWithGraphQL = await Promise.all(
     items.map(async ({sku, ...item}) => {
-      const graphQLreq = await getGraphQLProduct(sku);
-      const graphQLProduct = graphQLreq.user.getProducts.result.items[0];
+      const graphQLProduct = graphqlCollectionData.find((item) => item.sku === sku);
       return {...item, ...graphQLProduct};
     }),
   );
