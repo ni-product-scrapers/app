@@ -1,7 +1,16 @@
 import fetch from 'node-fetch';
 import stub from './products.json';
 import config from '../../config';
+import { request } from 'graphql-request'
+import graphqlProductQuery from '../../lib/products.query';
 
+const getGraphQLProduct = (search) => {
+  return request(
+    'http://native-instruments.com/graphql',
+    graphqlProductQuery,
+    { hitsPerPage: 1, search }
+  )
+}
 
 const {SCRAPINGHUB_API_KEY, SCRAPINGHUB_PROJECT_ID} = config;
 
@@ -65,5 +74,13 @@ export default async (req, res) => {
 
   const items = Object.values(itemsMap);
 
-  res.status(200).json(items);
+  const itemsWithGraphQL = await Promise.all(
+    items.map( async ({sku, ...item}) => {
+      const graphQLreq = await getGraphQLProduct(sku);
+      const graphQLProduct = graphQLreq.user.getProducts.result.items[0];
+      return {...item, ...graphQLProduct};
+    })
+  );
+
+  res.status(200).json(itemsWithGraphQL);
 };
