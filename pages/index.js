@@ -21,7 +21,7 @@ const Home = ({ data = [] }) => (
 
       <Flex justifyContent="space-between" flexWrap="wrap">
         {data.map((product, index) => (
-          <ProductCard key={index} {...product} />
+           <ProductCard key={index} {...product} />
         ))}
       </Flex>
 

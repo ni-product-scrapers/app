@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import styled from '@emotion/styled';
-import { Flex, Box, Text, Button } from 'rebass';
+import { Box, Text, Button } from 'rebass';
 
-const ShopRow = ({ shop, title, price, currency, shop_logo, image_url, product_url }) => {
+const ShopRow = ({ shop, title, price, currency, shop_logo, product_url, main }) => {
+
+  const originalPrice = main.priceEur;
+  const isPriceMinor = price < originalPrice;
+
   return (
     <Box
       sx={{ padding: 3, marginBottom: 3 }}
@@ -26,8 +29,10 @@ const ShopRow = ({ shop, title, price, currency, shop_logo, image_url, product_u
         />
       </Box>
       <Box>
-        <Text fontWeight="bold" px={1}>
+        <Text fontWeight="bold" px={1} css={css`color: ${isPriceMinor ? '#e91e63' : '#4caf50'};`}>
           {price || 'ND'} {currency || 'ND'}
+          {isPriceMinor ? ' 😱 ' : ' 👍' }
+
         </Text>
       </Box>
       <Box pr={2}>{title || 'ND'}</Box>
